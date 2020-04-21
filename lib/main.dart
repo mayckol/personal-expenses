@@ -27,6 +27,11 @@ class MyHomePage extends StatelessWidget {
         date: DateTime.now()),
   ];
 
+//  String titleInput;
+//  String amountInput;
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -52,14 +57,19 @@ class MyHomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   TextField(
+                    controller: titleController,
                     decoration: InputDecoration(labelText: 'Title'),
+//                    onChanged: (value) => titleInput = value,
                   ),
                   TextField(
+                    controller: amountController,
                     decoration: InputDecoration(labelText: 'Amount'),
+//                    onChanged: (value) => amountInput = value,
                   ),
-                  FlatButton(child: Text('Add Transaction'),
+                  FlatButton(
+                    child: Text('Add Transaction'),
                     textColor: Colors.purple,
-                    onPressed: () => {},
+                    onPressed: () => print(titleController.text),
                   )
                 ],
               ),
