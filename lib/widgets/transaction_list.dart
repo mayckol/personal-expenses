@@ -7,52 +7,58 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
 
   TransactionList(this.transactions);
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: transactions
-          .map((tx) => Card(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        border: Border.all(
-                          color: Colors.purple,
-                          width: 2,
-                        ),
-                      ),
-                      child: Text(
-                        'R\$${tx.amount}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.purple),
-                      ),
-                      padding: EdgeInsets.all(10),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          children: transactions
+              .map((tx) => Card(
+                    child: Row(
                       children: <Widget>[
-                        Text(
-                          tx.title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                        Container(
+                          margin:
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(
+                              color: Colors.purple,
+                              width: 2,
+                            ),
                           ),
+                          child: Text(
+                            'R\$${tx.amount}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.purple),
+                          ),
+                          padding: EdgeInsets.all(10),
                         ),
-                        Text(
-                          DateFormat.yMMMd().format(tx.date),
-                          style: TextStyle(color: Colors.indigo, fontSize: 12),
-                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              tx.title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Text(
+                              DateFormat.yMMMd().format(tx.date),
+                              style: TextStyle(color: Colors.indigo, fontSize: 12),
+                            ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              ))
-          .toList(),
+                    ),
+                  ))
+              .toList(),
+        ),
+      ),
     );
   }
 }
