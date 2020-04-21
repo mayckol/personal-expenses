@@ -58,7 +58,7 @@ class MyHomePage extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              tx.amount.toString().replaceAll('.', ','),
+                              'R\$${tx.amount}',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20,
