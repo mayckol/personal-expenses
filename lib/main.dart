@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-
 //  String titleInput;
 //  String amountInput;
   final titleController = TextEditingController();
@@ -26,6 +25,12 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter App'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => {},
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -40,7 +45,7 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-           UserTransactions()
+            UserTransactions()
           ],
         ),
       ),
