@@ -16,6 +16,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        accentColor: Colors.lightBlue,
+      ),
       home: MyHomePage(),
     );
   }
