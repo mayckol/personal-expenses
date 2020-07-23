@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
         accentColor: Colors.lightBlue,
         fontFamily: 'QuickSand',
         textTheme: ThemeData.light().textTheme.copyWith(
-          title: TextStyle(
+          headline6: TextStyle(
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.bold,
             fontSize: 18,
