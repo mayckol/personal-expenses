@@ -38,12 +38,16 @@ class Chart extends StatelessWidget {
       elevation: 5,
       margin: EdgeInsets.all(20),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: groupedTransactions
-            .map((tr) => ChartBar(
-                  label: tr['day'],
-                  amount: tr['amount'],
-                  percent: (tr['amount'] as double) / _weekTotalValue,
-                ))
+            .map((tr) => Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                    label: tr['day'],
+                    amount: tr['amount'],
+                    percent: (tr['amount'] as double) / _weekTotalValue,
+                  ),
+            ))
             .toList(),
       ),
     );
