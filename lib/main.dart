@@ -53,7 +53,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [];
+  final List<Transaction> _userTransactions = [
+    Transaction(id: '1', title: 'Pesca', amount: 59.90, date: DateTime.now()),
+    Transaction(id: '2', title: 'Cabaré', amount: 43.90, date: DateTime.now()),
+    Transaction(id: '3', title: 'Motel', amount: 229.70, date: DateTime.now()),
+    Transaction(id: '4', title: 'Keyboard', amount: 99, date: DateTime.now()),
+    Transaction(id: '5', title: 'Mouse', amount: 13.90, date: DateTime.now()),
+    Transaction(id: '6', title: 'Vinho', amount: 15.20, date: DateTime.now()),
+    Transaction(id: '8', title: 'Cerveja', amount: 7.90, date: DateTime.now()),
+    Transaction(id: '9', title: 'Goiabada', amount: 7.90, date: DateTime.now()),
+    Transaction(id: '10', title: 'Doce', amount: 7.90, date: DateTime.now()),
+  ];
 
   List<Transaction> get _recentTransactions {
     return _userTransactions
@@ -77,6 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _userTransactions.removeWhere((tr) => tr.id == id);
     });
   }
+
   void _startAddNewTransaction(BuildContext buildContext) {
     showModalBottomSheet(
       context: buildContext,
@@ -92,26 +103,37 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Personal Expenses',
-          /*style: TextStyle(fontFamily: 'Open Sans')*/
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(context),
-          )
-        ],
+    final appBar = AppBar(
+      title: Text(
+        'Personal Expenses',
+        /*style: TextStyle(fontFamily: 'Open Sans')*/
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context),
+        )
+      ],
+    );
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
 //        mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions, _removeTransaction)
+            Container(
+              height: availableHeight * 0.30,
+              child: Chart(_recentTransactions),
+            ),
+            Container(
+              height: availableHeight * 0.70,
+              child: TransactionList(_userTransactions, _removeTransaction),
+            )
           ],
         ),
       ),
