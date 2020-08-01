@@ -59,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction(id: '10', title: 'Doce', amount: 7.90, date: DateTime.now()),
   ];
 
+  bool _showChart = false;
+
   List<Transaction> get _recentTransactions {
     return _userTransactions
         .where((tr) => tr.date.isAfter(
@@ -95,6 +97,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Container _getResponsiveChoiceContainer(ctxHeight) {
+    if (_showChart) {
+      return Container(
+        height: ctxHeight * 0.30,
+        child: Chart(_recentTransactions),
+      );
+    } else {
+      return Container(
+        height: ctxHeight * 0.70,
+        child: TransactionList(
+          _userTransactions,
+          _removeTransaction,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
@@ -120,14 +139,21 @@ class _MyHomePageState extends State<MyHomePage> {
 //        mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: availableHeight * 0.30,
-              child: Chart(_recentTransactions),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Exibir Gráfico'),
+                Switch(
+                  value: _showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      _showChart = value;
+                    });
+                  },
+                ),
+              ],
             ),
-            Container(
-              height: availableHeight * 0.70,
-              child: TransactionList(_userTransactions, _removeTransaction),
-            )
+            _getResponsiveChoiceContainer(availableHeight)
           ],
         ),
       ),
