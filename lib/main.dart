@@ -10,6 +10,9 @@ void main() => runApp(ExpensesApp());
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[DeviceOrientation.portraitUp],
+    );
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
