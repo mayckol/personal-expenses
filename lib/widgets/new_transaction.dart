@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_expenses/widgets/adaptative_text_field.dart';
+
+import 'adaptative_button.dart';
+import 'adaptative_text_field.dart';
 
 class NewTransaction extends StatefulWidget {
   final void Function(String, double, DateTime) addNewTransaction;
@@ -57,18 +61,17 @@ class _NewTransactionState extends State<NewTransaction> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            TextField(
+            AdaptativeTextField(
               controller: _titleController,
-              decoration: InputDecoration(labelText: 'Title'),
+              inputDecoration: InputDecoration(labelText: 'Title'),
+              keyboardType: TextInputType.text,
               onSubmitted: (_) => submitData(),
-//                    onChanged: (value) => titleInput = value,
             ),
-            TextField(
+            AdaptativeTextField(
               controller: _amountController,
-              decoration: InputDecoration(labelText: 'Amount'),
+              inputDecoration: InputDecoration(labelText: 'Amount'),
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
-//                    onChanged: (value) => amountInput = value,
             ),
             Container(
               height: 70,
@@ -97,10 +100,8 @@ class _NewTransactionState extends State<NewTransaction> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                RaisedButton(
-                  color: Theme.of(context).primaryColor,
-                  child: Text('Add Transaction'),
-                  textColor: Theme.of(context).textTheme.button.color,
+                AdaptativeButton(
+                  label: 'Add Transaction',
                   onPressed: submitData,
                 ),
               ],
