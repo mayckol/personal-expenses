@@ -100,40 +100,40 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _getIconButton(IconData icon, Function fn) {
+  Widget _getIconButton({IconData icon, Function fn}) {
     return Platform.isIOS
         ? GestureDetector(
             onTap: fn,
             child: Icon(icon),
           )
-        : IconButton(icon: Icon(icon), onPressed: () => fn);
+        : IconButton(icon: Icon(icon), onPressed: fn);
   }
 
   @override
   Widget build(BuildContext context) {
-    bool _isLandScape =
+    bool isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartList =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
     final actions = <Widget>[
-      if (_isLandScape)
+      if (isLandScape)
         _getIconButton(
-            _showChart ? Icons.list : Icons.show_chart,
-            () => setState(() {
-                  _showChart = !_showChart;
-                })),
-      _getIconButton(
-          _showChart ? Icons.list : Icons.show_chart,
-          () => setState(() {
+            icon: _showChart ? iconList : chartList,
+            fn: () {
+              setState(() {
                 _showChart = !_showChart;
-              })),
-      _getIconButton(Platform.isIOS ? CupertinoIcons.add : Icons.add,
-          () => _startAddNewTransaction(context))
+              });
+            }),
+      _getIconButton(
+          icon: Platform.isIOS ? CupertinoIcons.add : Icons.add,
+          fn: () => _startAddNewTransaction(context)),
     ];
 
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            middle: Text(''
-                'Personal Expenses'),
+            middle: Text('Personal Expenses'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: actions,
@@ -151,12 +151,13 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
 
-    final SingleChildScrollView _singleChildScrollView = SingleChildScrollView(
-      child: Column(
+    final SafeArea _singleChildScrollView = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
 //        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-//            if (_isLandScape)
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+//            if (isLandScape)
 //              Row(
 //                mainAxisAlignment: MainAxisAlignment.center,
 //                children: <Widget>[
@@ -172,20 +173,21 @@ class _MyHomePageState extends State<MyHomePage> {
 //                  ),
 //                ],
 //              ),
-          if (_showChart || !_isLandScape)
-            Container(
-              height: availableHeight * (_isLandScape ? 0.70 : 0.30),
-              child: Chart(_recentTransactions),
-            ),
-          if (!_showChart || !_isLandScape)
-            Container(
-              height: availableHeight * 0.70,
-              child: TransactionList(
-                _userTransactions,
-                _removeTransaction,
+            if (_showChart || !isLandScape)
+              Container(
+                height: availableHeight * (isLandScape ? 0.70 : 0.30),
+                child: Chart(_recentTransactions),
               ),
-            ),
-        ],
+            if (!_showChart || !isLandScape)
+              Container(
+                height: availableHeight * 0.70,
+                child: TransactionList(
+                  _userTransactions,
+                  _removeTransaction,
+                ),
+              ),
+          ],
+        ),
       ),
     );
 
