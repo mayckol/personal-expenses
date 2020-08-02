@@ -97,23 +97,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container _getResponsiveChoiceContainer(ctxHeight) {
-    if (_showChart) {
-      return Container(
-        height: ctxHeight * 0.30,
-        child: Chart(_recentTransactions),
-      );
-    } else {
-      return Container(
-        height: ctxHeight * 0.70,
-        child: TransactionList(
-          _userTransactions,
-          _removeTransaction,
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
@@ -139,21 +122,34 @@ class _MyHomePageState extends State<MyHomePage> {
 //        mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Exibir Gráfico'),
-                Switch(
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  },
+            if(_isLandScape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text('Exibir Gráfico'),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            if(_showChart || !_isLandScape)
+              Container(
+                height: availableHeight * 0.30,
+                child: Chart(_recentTransactions),
+              ),
+            if(!_showChart || !_isLandScape)
+              Container(
+                height: availableHeight * 0.70,
+                child: TransactionList(
+                  _userTransactions,
+                  _removeTransaction,
                 ),
-              ],
-            ),
-            _getResponsiveChoiceContainer(availableHeight)
+              ),
           ],
         ),
       ),
