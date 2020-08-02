@@ -133,22 +133,22 @@ class _MyHomePageState extends State<MyHomePage> {
 //        mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if (_isLandScape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text('Exibir Gráfico'),
-                  Switch.adaptive(
-                    value: _showChart,
-                    activeColor: Theme.of(context).accentColor,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    },
-                  ),
-                ],
-              ),
+//            if (_isLandScape)
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.center,
+//                children: <Widget>[
+//                  Text('Exibir Gráfico'),
+//                  Switch.adaptive(
+//                    value: _showChart,
+//                    activeColor: Theme.of(context).accentColor,
+//                    onChanged: (value) {
+//                      setState(() {
+//                        _showChart = value;
+//                      });
+//                    },
+//                  ),
+//                ],
+//              ),
             if (_showChart || !_isLandScape)
               Container(
                 height: availableHeight * (_isLandScape ? 0.70 : 0.30),
