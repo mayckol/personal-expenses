@@ -99,18 +99,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool _isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: Text(
         'Personal Expenses',
         /*style: TextStyle(fontFamily: 'Open Sans')*/
       ),
       actions: <Widget>[
+        if(_isLandScape)
+        IconButton(
+          icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+          onPressed: () => setState(() {
+              _showChart = !_showChart;
+          })
+        ),
         IconButton(
           icon: Icon(Icons.add),
           onPressed: () => _startAddNewTransaction(context),
-        )
+        ),
       ],
     );
+
     final availableHeight = MediaQuery.of(context).size.height -
         appBar.preferredSize.height -
         MediaQuery.of(context).padding.top;
@@ -122,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //        mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            if(_isLandScape)
+            if (_isLandScape)
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -137,12 +148,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-            if(_showChart || !_isLandScape)
+            if (_showChart || !_isLandScape)
               Container(
-                height: availableHeight * 0.30,
+                height: availableHeight * (_isLandScape ? 0.70 : 0.30),
                 child: Chart(_recentTransactions),
               ),
-            if(!_showChart || !_isLandScape)
+            if (!_showChart || !_isLandScape)
               Container(
                 height: availableHeight * 0.70,
                 child: TransactionList(
