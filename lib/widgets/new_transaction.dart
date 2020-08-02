@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:personal_expenses/widgets/adaptative_text_field.dart';
+import 'adaptative_date_picker.dart';
+import 'adaptative_text_field.dart';
 
 import 'adaptative_button.dart';
 import 'adaptative_text_field.dart';
@@ -27,29 +27,9 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addNewTransaction(
-      enteredTitle,
-      enteredAmount,
-      _selectedDate
-    );
+    widget.addNewTransaction(enteredTitle, enteredAmount, _selectedDate);
 
     Navigator.of(context).pop();
-  }
-
-  void _showDatePicker() {
-    showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2019),
-            lastDate: DateTime.now())
-        .then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
   }
 
   @override
@@ -73,28 +53,10 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
             ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      _selectedDate == null
-                          ? 'Date not selected'
-                          : 'Selected date: ${DateFormat('dd/MM/y').format(_selectedDate)}',
-                    ),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Select the date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: _showDatePicker,
-                  )
-                ],
+            AdaptativeDatePicker(
+              selectedDate: _selectedDate,
+              onDateChanged: (newDate) => setState(
+                () => _selectedDate = newDate,
               ),
             ),
             Row(
