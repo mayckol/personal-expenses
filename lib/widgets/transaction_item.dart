@@ -7,9 +7,10 @@ class TransactionItem extends StatelessWidget {
   final Function(String) removeTransaction;
 
   TransactionItem({
-    this.tr,
-    this.removeTransaction,
-  });
+    Key key,
+    @required this.tr,
+    @required this.removeTransaction,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
